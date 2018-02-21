@@ -140,53 +140,12 @@ public class SoloPlayerController : MonoBehaviour {
                     h = Input.GetAxis("Horizontal");
                     v = Input.GetAxis("Vertical");
 
-                    /*
-                    //raycast pickup
-                    RaycastHit hit;
-                    if (holding == false)
-                    {
-                        if (Input.GetButtonDown("Fire2"))
-                        {
-                            print("goll");
-                            Debug.DrawRay(cam.transform.position, cam.transform.forward * 100f,Color.red);
-                            if (Physics.Raycast(cam.transform.position + (cam.transform.forward * 2f), cam.transform.forward, out hit, grabDist))
-                            {
-                                print("Raycasted!");
-                                if (hit.transform.tag == "pickup")
-                                {
-                                    pickupObj = hit.transform;
-                                    pickupObj.GetComponent<Collider>().enabled = false;
-                                    holding = true;
-
-                                }
-                            }
-                        }
-                    } else
-                    {
-                        if (pickupObj != null)
-                        {
-                            if (Input.GetButtonDown("Fire2"))
-                            {
-                                holding = false;
-                                pickupObj.GetComponent<Collider>().enabled = true;
-                                pickupObj = null;
-                                
-                            }
-                            pickupObj.position = (cam.transform.position + cam.transform.forward) * holdDist;
-
-                        }
-                    }
-                    */
-                    
-
                     // Record pos and rotation
                     recordArray[0, 0] = transform.position;
                     recordArray[0, 1] = transform.rotation;
 
                     // record camera rotation
                     recordArray[0, 2] = camObj.rotation;
-
-                    
 
                     //record aiming script rotation
                     recordArray[0, 4] = horzAim.RotX;
@@ -195,29 +154,27 @@ public class SoloPlayerController : MonoBehaviour {
                     //Set Cam Dist
                     SetCameraOffset();
 
+
                     // Check Gravity
                     if (characterCtrlr.isGrounded == true)
                     {
                         moveDirection = new Vector3(h, 0, v);
-                        if (Input.GetButton("Jump"))
+                        if (Input.GetButtonDown("Jump"))
                         {
                             moveDirection.y = jumpSpd;
+
                         }
                     }
                     else
                     {
+                        // Check if something is above the player, and if true reset up velocity.
+                        if (characterCtrlr.collisionFlags == CollisionFlags.Above)
+                        {
+                            moveDirection.y = 0f;
+                        }
                         moveDirection.x = h;
                         moveDirection.z = v;
                         moveDirection.y -= gravity * Time.deltaTime;
-                    }
-
-                    //  Apply movement
-                    if (moveDirection.x != 0f || moveDirection.z != 0f)
-                    {
-                        //animCtrl.SetInteger("animState", 1);
-                    } else
-                    {
-                        //animCtrl.SetInteger("animState", 0);
                     }
 
                     moveDirection.x *= moveSpd;
@@ -244,17 +201,6 @@ public class SoloPlayerController : MonoBehaviour {
                 {
                     PlaybackCharacterActions();
                 }
-
-                /*
-                if (Input.GetButtonDown("Fire1"))
-                {
-                    active = false;
-                }
-                else
-                {
-                    //active = true;
-                }
-                */
 
                 break;
             case "pre-rewind":
@@ -398,11 +344,6 @@ public class SoloPlayerController : MonoBehaviour {
                 echoCtrl.endStep = sendStep;
             }
         }
-
-        
-
-        
-
     }
 	void SetCameraOffset()
 	{	cam.transform.position = transform.position + camOffset;
@@ -439,11 +380,6 @@ public class SoloPlayerController : MonoBehaviour {
         //Destroy FMOD Listener
         //GetComponent<FMOD_Listener>().enabled = false;
 
-    }
-
-    void UseWeapon()
-    {
-        print("Use Weapon Called");
     }
 
     private void OnTriggerEnter(Collider other)
