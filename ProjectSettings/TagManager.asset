@@ -16,6 +16,9 @@ TagManager:
   - pickup
   - key
   - master-solo-game-controller
+  - power-source
+  - wire-entry
+  - wire-exit
   layers:
   - Default
   - TransparentFX
