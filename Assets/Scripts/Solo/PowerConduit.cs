@@ -3,38 +3,56 @@ using System.Collections;
 
 public class PowerConduit : ActivatableObject
 {
-    ActivatableObject parentOn;
+    public ActivatableObject wire;
+    public ActivatableObject connectedObj;
+
+    public bool isExit = false;
 
     private void Start()
     {
-        parentOn = transform.parent.GetComponent<ActivatableObject>();
+        wire = transform.parent.GetComponent<ActivatableObject>();
+        
     }
     private void Update()
     {
-        if (gameObject.tag == "wire-exit")
-        {
-            on = parentOn
-            if ()
-            // Check for timeout
-            if (timeout > timeoutTime)
-            {
-                on = false;
-                timeout = 0f;
-            }
-            else
-            {
-                timeout += Time.deltaTime;
-            }
-        }
-        else
-        {
-        }
+
     }
-    private void OnTriggerEnter(Collider other)
+
+	private void OnCollisionEnter(Collision collision)
     {
-        if (other.tag == "wire-exit" && on == false)
+        print(name + " collided with " + collision.gameObject.name);
+
+        if (collision.gameObject.tag == "conduit-entry" && isExit == true)
         {
-             = other.GetComponent<ActivatableObject>().on;
+            connectedObj = collision.transform.parent.GetComponent<WireBehaviour>();
+            
         }
-    }
+	}
+	private void OnCollisionStay(Collision collision)
+	{
+        if (collision.gameObject.tag == "conduit-entry" && isExit == true)
+        {
+            print("stuffs hapenin man");
+
+            if (wire.power >= 0.5f) 
+            {
+                connectedObj.power += 0.5f;
+                wire.power -= 0.5f;    
+            } else if (wire.power > 0f && wire.power < 0.5f )
+            {
+                connectedObj.power += wire.power;
+                wire.power = 0f;
+            }
+
+        }
+	}
+	private void OnCollisionExit(Collision collision)
+	{
+        if (collision.gameObject.tag == "conduit-entry" && isExit == true) 
+        {
+            connectedObj = null;
+        }
+
+	}
 }
+

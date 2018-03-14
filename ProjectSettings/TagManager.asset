@@ -19,6 +19,7 @@ TagManager:
   - power-source
   - wire-entry
   - wire-exit
+  - conduit-entry
   layers:
   - Default
   - TransparentFX

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class WireBehaviour : ActivatableObject
 {
-
+    
     Material m_Material;
     [SerializeField] GameObject entry,exit;
 
@@ -13,38 +13,31 @@ public class WireBehaviour : ActivatableObject
     }
 
     private void Update()
-    {
+    {   //checks if there is power in the object and sets on and off accordingly.
+        powerCheck();
+
+        // Set the colour if the obj is on.
         if (on)
         {
             m_Material.color = Color.red;
-
-            // Check for timeout
-            if (timeout > timeoutTime)
-            {
-                on = false;
-                timeout = 0f;
-            } else
-            {
-                timeout += Time.deltaTime;
-            }
         } else
         {
             m_Material.color = Color.white;
         }
+
+        // drain the power
+
     }
-
-    
-    private void OnTriggerStay(Collider other)
+    void powerCheck() 
     {
-
-        if (other.tag == "wire-exit" && on == false)
+        if (power > 0f) 
         {
- 
-            if (other.GetComponent<ActivatableObject>().on == true)
-            {
-                on = true;
-            }
-        }
+            on = true;
+            
+        } else 
+        {
+            on = false;
+        }    
     }
    
 }
