@@ -8,11 +8,6 @@ public class EchoController : MonoBehaviour
     public int endStep = 0;
     [SerializeField] Animator animCtrl;
     Vector3 lastPos;
-    // Use this for initialization
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void FixedUpdate()

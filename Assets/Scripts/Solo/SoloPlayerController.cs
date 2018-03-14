@@ -288,6 +288,15 @@ public class SoloPlayerController : MonoBehaviour {
     {
         transform.position = checkpoint.gameObject.transform.position;
         transform.rotation = checkpoint.gameObject.transform.rotation;
+
+        ResetEchoes();
+        SoloGameController.main.gameState = "reset";
+        ResetArrays();
+
+    }
+
+    public void ResetEchoes()
+    {
         for (int i = 0; i < echoList.Count; i++)
         {
             Destroy(echoList[i]);
@@ -295,10 +304,9 @@ public class SoloPlayerController : MonoBehaviour {
 
         echoList.Clear();
         activeTimeLoops = 0;
-        ResetArrays();
-        SoloGameController.main.gameState = "reset";
-
+        
     }
+    
     void CreateTimeLoop()
     {
         active = true;
