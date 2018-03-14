@@ -3121,6 +3121,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 114127227498336590, guid: 7c722b1248f30f64b995ada268de10d8,
+        type: 2}
+      propertyPath: maxTimeLoops
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114127227498336590, guid: 7c722b1248f30f64b995ada268de10d8,
+        type: 2}
+      propertyPath: maxAmountOfSteps
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 114127227498336590, guid: 7c722b1248f30f64b995ada268de10d8,
+        type: 2}
+      propertyPath: rewindLimit
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7c722b1248f30f64b995ada268de10d8, type: 2}
   m_IsPrefabParent: 0
