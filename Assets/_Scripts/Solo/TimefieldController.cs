@@ -23,6 +23,7 @@ public class TimefieldController : MonoBehaviour
             if (SoloPlayerController.main.state != "rewinding")
             {
                 SoloPlayerController.main.ResetEchoes();
+                
             }
         }
     }
