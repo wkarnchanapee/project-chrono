@@ -53,7 +53,7 @@ public class PressurePlateControl : ActivatableObject
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player" || other.tag == "echo")
+        if (other.tag == "Player" || other.tag == "echo" || other.tag == "pickup")
         {
             if (SceneManager.GetActiveScene().name == "Hub")
             {   if (SoloGameController.main.keys == openAtKeyStage || openAtKeyStage == -1)
@@ -74,7 +74,7 @@ public class PressurePlateControl : ActivatableObject
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" || other.tag == "Echo")
+        if (other.tag == "Player" || other.tag == "Echo" || other.tag == "pickup")
         {
             FMODUnity.RuntimeManager.PlayOneShot(sfx);
         }

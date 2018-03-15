@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Abilities;
 
 
@@ -52,7 +53,13 @@ public class SoloPlayerController : MonoBehaviour {
 
     [SerializeField] GameObject GameControllerPrefab;
     SoloAiming horzAim, vertAim;
-    
+    public float pickupDist = 2f;
+    public float pickupRange = 2f;
+    Transform grabbedObj = null;
+    bool isGrabbing = false;
+
+    //unityevents
+    public UnityEvent resetEvent;
 
     private void Awake()
     {
@@ -65,13 +72,12 @@ public class SoloPlayerController : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
-
+        //create unity event
+        if (resetEvent == null) resetEvent = new UnityEvent();
 
 		characterCtrlr = GetComponent<CharacterController> ();
         camObj = transform.GetChild(0);
         camOffset = cam.transform.position - transform.position;
-
-        
 
         gameCtrl = GameObject.FindGameObjectWithTag("GameController").GetComponent<SoloGameController>();
 
@@ -96,6 +102,37 @@ public class SoloPlayerController : MonoBehaviour {
             else
             {
                 //active = true;
+            }
+
+            if (Input.GetButtonDown("Fire2"))
+            {
+
+                if (grabbedObj != null)
+                {   // drop your current held object.
+                    grabbedObj.GetComponent<GrabbableObject>().col.isTrigger = false;
+                    grabbedObj.GetComponent<GrabbableObject>().isGrabbed = false;
+                    grabbedObj = null;
+
+                } else
+                {   //attempt to grab something.
+                    RaycastHit hit;
+                    if (Physics.Raycast(camObj.position, camObj.forward, out hit, pickupRange))
+                    {
+                        if (hit.transform.tag == "pickup")
+                        {
+                            //resetEvent.AddListener(hit.transform.GetComponent<GrabbableObject>().Reset);
+                            hit.transform.GetComponent<GrabbableObject>().isGrabbed = true;
+                            grabbedObj = hit.transform;
+                            pickupDist = Vector3.Distance(camObj.position, grabbedObj.position);
+                        }
+                    }
+                    else
+                    {
+                        print("nothing to grab");
+                    }
+
+                }
+
             }
 
             //reset game button
@@ -291,10 +328,23 @@ public class SoloPlayerController : MonoBehaviour {
 
         ResetEchoes();
         SoloGameController.main.gameState = "reset";
+        grabbedObj = null;
         ResetArrays();
-
+        resetEvent.Invoke();
     }
 
+    public void RegisterResetListener(GameObject other)
+    {   //this function registers with the player game object to check when the player Reset function is called.
+        
+        switch (other.tag)
+        {
+            case "pickup":
+                resetEvent.AddListener(other.GetComponent<GrabbableObject>().Reset);
+                break;
+        }
+        
+            
+    }
     public void ResetEchoes()
     {
         for (int i = 0; i < echoList.Count; i++)
