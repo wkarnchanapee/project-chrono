@@ -4,8 +4,7 @@ using System.Collections;
 public class PowerConduit : ActivatableObject
 {
     public ActivatableObject wire;
-    public ActivatableObject connectedObj;
-
+    public ActivatableObject connectedObj = null;
     public bool isExit = false;
 
     private void Start()
@@ -13,43 +12,48 @@ public class PowerConduit : ActivatableObject
         wire = transform.parent.GetComponent<ActivatableObject>();
         
     }
-    private void Update()
+
+    private void OnTriggerEnter(Collider other)
     {
-
-    }
-
-	private void OnCollisionEnter(Collision collision)
-    {
-        print(name + " collided with " + collision.gameObject.name);
-
-        if (collision.gameObject.tag == "conduit-entry" && isExit == true)
+        if (isExit)
         {
-            connectedObj = collision.transform.parent.GetComponent<WireBehaviour>();
-            
-        }
-	}
-	private void OnCollisionStay(Collision collision)
-	{
-        if (collision.gameObject.tag == "conduit-entry" && isExit == true)
-        {
-            print("stuffs hapenin man");
-
-            if (wire.power >= 0.5f) 
+            switch (other.tag)
             {
-                connectedObj.power += 0.5f;
-                wire.power -= 0.5f;    
-            } else if (wire.power > 0f && wire.power < 0.5f )
-            {
-                connectedObj.power += wire.power;
-                wire.power = 0f;
+                
             }
-
-        }
-	}
-	private void OnCollisionExit(Collision collision)
-	{
-        if (collision.gameObject.tag == "conduit-entry" && isExit == true) 
+        } else
         {
+            switch (other.tag)
+            {
+                case "pressure-plate":
+                    connectedObj = other.GetComponent<ActivatableObject>();
+                    break;
+                case "wire-exit":
+                    connectedObj = other.GetComponent<ActivatableObject>();
+                    break;
+            }
+        }        
+    }
+    private void OnTriggerStay(Collider other)
+    {   if (connectedObj != null)
+        {
+            switch (connectedObj.tag)
+            {
+                case "pressure-plate":
+                    on = connectedObj.on;
+                    break;
+                case "wire-exit":
+                    on = connectedObj.on;
+                    break;
+            }
+        }
+        
+	}
+	private void OnTriggerExit(Collider other)
+	{
+        if (other.gameObject == connectedObj.gameObject)
+        {
+            on = false;
             connectedObj = null;
         }
 

@@ -20,6 +20,7 @@ TagManager:
   - wire-entry
   - wire-exit
   - conduit-entry
+  - pressure-plate
   layers:
   - Default
   - TransparentFX

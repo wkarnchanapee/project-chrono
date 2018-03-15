@@ -5,17 +5,26 @@ public class WireBehaviour : ActivatableObject
 {
     
     Material m_Material;
-    [SerializeField] GameObject entry,exit;
+    [SerializeField] ActivatableObject entry,exit;
 
     private void Start()
     {
         m_Material = GetComponent<Renderer>().material;
+        entry = transform.GetChild(0).GetComponent<ActivatableObject>();
+        exit = transform.GetChild(1).GetComponent<ActivatableObject>();
     }
 
     private void Update()
-    {   //checks if there is power in the object and sets on and off accordingly.
-        powerCheck();
-
+    {   
+        if (entry.on)
+        {
+            on = true;
+            exit.on = true;
+        } else
+        {
+            on = false;
+            exit.on = false;
+        }
         // Set the colour if the obj is on.
         if (on)
         {
@@ -24,20 +33,9 @@ public class WireBehaviour : ActivatableObject
         {
             m_Material.color = Color.white;
         }
-
-        // drain the power
+        
 
     }
-    void powerCheck() 
-    {
-        if (power > 0f) 
-        {
-            on = true;
-            
-        } else 
-        {
-            on = false;
-        }    
-    }
+    
    
 }
