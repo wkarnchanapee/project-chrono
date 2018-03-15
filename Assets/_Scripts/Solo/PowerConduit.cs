@@ -51,11 +51,15 @@ public class PowerConduit : ActivatableObject
 	}
 	private void OnTriggerExit(Collider other)
 	{
-        if (other.gameObject == connectedObj.gameObject)
+        if (connectedObj != null)
         {
-            on = false;
-            connectedObj = null;
+            if (other.gameObject == connectedObj.gameObject)
+            {
+                on = false;
+                connectedObj = null;
+            }
         }
+        
 
 	}
 }
