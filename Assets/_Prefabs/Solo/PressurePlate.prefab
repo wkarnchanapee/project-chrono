@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114135878374632606}
   m_Layer: 0
   m_Name: PressurePlate
-  m_TagString: Untagged
+  m_TagString: pressure-plate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029937681252078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.368, y: 0.371, z: 3.056}
+  m_LocalPosition: {x: 6.16, y: 1.1910985, z: 13.794927}
   m_LocalScale: {x: 0.8408126, y: 0.38219705, z: 0.8408127}
   m_Children: []
   m_Father: {fileID: 0}
@@ -157,5 +157,6 @@ MonoBehaviour:
   timeout: 0
   timeoutTime: 1
   startCondition: 0
+  power: 0
   openAtKeyStage: 0
   sfx: event:/snd_pressureplate
