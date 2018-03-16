@@ -13,6 +13,7 @@ public class WireBehaviour : ActivatableObject
         m_Material = GetComponent<Renderer>().material;
         entry = transform.GetChild(0).GetComponent<ActivatableObject>();
         exit = transform.GetChild(1).GetComponent<ActivatableObject>();
+
     }
 
     private void Update()

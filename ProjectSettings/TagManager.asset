@@ -21,6 +21,7 @@ TagManager:
   - wire-exit
   - conduit-entry
   - pressure-plate
+  - TimerText
   layers:
   - Default
   - TransparentFX
