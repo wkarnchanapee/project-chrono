@@ -6,6 +6,7 @@ public class WireBehaviour : ActivatableObject
     
     Material m_Material;
     [SerializeField] ActivatableObject entry,exit;
+    [SerializeField] bool defaultBehaviour = true;
 
     private void Start()
     {
@@ -26,13 +27,26 @@ public class WireBehaviour : ActivatableObject
             exit.on = false;
         }
         // Set the colour if the obj is on.
-        if (on)
-        {
-            m_Material.color = Color.red;
-        } else
-        {
-            m_Material.color = Color.white;
+        if (defaultBehaviour) {
+            if (on)
+            {
+                m_Material.color = Color.red;
+            }
+            else
+            {
+                m_Material.color = Color.white;
+            }
+        } else {
+            if (on)
+            {
+                m_Material.color = Color.white;
+            }
+            else
+            {
+                m_Material.color = Color.red;
+            }
         }
+
         
 
     }
