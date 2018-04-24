@@ -260,18 +260,11 @@ public class SoloPlayerController : MonoBehaviour {
         transform.position = (Vector3)recordArray[0, 0];
         transform.rotation = (Quaternion)recordArray[0, 1];
         camObj.rotation = (Quaternion)recordArray[0, 2];
-        // Check recordArray if weapon was pressed.
-        /*
-        if ((bool)recordArray[0, 3] == true)
-        {
-            UseWeapon();
-        }
-        */
+
         // Set aiming direction
         horzAim.RotX = (float)recordArray[0, 4];
         vertAim.RotY = (float)recordArray[0, 5];
 
-        
         tempArray[0] = (Vector3)recordArray[0, 0];
         tempArray[1] = (Quaternion)recordArray[0, 1];
         tempArray[2] = (Quaternion)recordArray[0, 2];
@@ -279,7 +272,6 @@ public class SoloPlayerController : MonoBehaviour {
         tempArray[4] = (float)recordArray[0, 4];
         tempArray[5] = (float)recordArray[0, 5];
 
-        
         for (int i = 0; i < maxAmountOfSteps; i++)
         {           
             if ( i != maxAmountOfSteps-1)
@@ -441,8 +433,6 @@ public class SoloPlayerController : MonoBehaviour {
         Destroy(GetComponent<Aiming>());
         Destroy(camObj.GetComponent<AudioListener>());
         Destroy(camObj.GetComponent<Aiming>());
-        //Destroy FMOD Listener
-        //GetComponent<FMOD_Listener>().enabled = false;
 
     }
 
