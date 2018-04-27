@@ -17408,9 +17408,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59705336f3e4aa244a90ac0724491cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpd: 6
-  fallSpd: 1
+  maxX: 4
+  maxY: 4
+  maxZ: 4
+  walkSpd: 3
+  sprintSpd: 7
+  xDamp: 0.15
+  zDamp: 0.15
+  moveSpd: 1.5
+  fallSpd: 4
   jumpHeight: 2
+  moveDir: {x: 0, y: 0, z: 0}
 --- !u!1001 &1595907774
 Prefab:
   m_ObjectHideFlags: 0
@@ -20703,7 +20711,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh25232
+  m_Name: pb_Mesh25254
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
