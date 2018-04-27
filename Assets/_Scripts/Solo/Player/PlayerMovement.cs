@@ -102,6 +102,12 @@ public class PlayerMovement : MonoBehaviour
             xDamp = airDamp;
             zDamp = airDamp;
 
+            if (charCtrl.collisionFlags == CollisionFlags.Above)
+            {
+                y = -fallSpd;
+                print("omae");
+            }
+
             // gravity
             y -= fallSpd * Time.deltaTime;
         }
@@ -109,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
         // gravity clamp.
         y = Mathf.Clamp(y, -fallSpd, jumpHeight);
         
+        // make movement
         moveDir = transform.TransformDirection(new Vector3(x, y, z) * moveSpd);
         charCtrl.Move(moveDir * Time.deltaTime);
     }
