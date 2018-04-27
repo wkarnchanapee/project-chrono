@@ -8,7 +8,6 @@ using Abilities;
 
 public class SoloPlayerController : MonoBehaviour {
 
-	public CharacterController characterCtrlr;
     public static SoloPlayerController main;
     public string state = "normal";
 
@@ -20,12 +19,8 @@ public class SoloPlayerController : MonoBehaviour {
     public bool holding = false;
     public float holdDist = 2.5f;
     Transform pickupObj;
-	public Vector3 moveDirection = Vector3.zero;
-	public float jumpSpd = 16f;
-	public float gravity = 20f;
     
 	public Vector3 camOffset = Vector3.zero;
-	public Camera cam;
     public bool active = true;
     bool recording = false;
     public SoloGameController gameCtrl;
@@ -36,9 +31,6 @@ public class SoloPlayerController : MonoBehaviour {
     public GameObject echoPrefab;
 
     public Transform camObj;
-    public float h, v;
-
-    [SerializeField] Animator animCtrl;
 
     int rewindSteps = 0;
     public float rewindCounter = 0;
@@ -65,6 +57,7 @@ public class SoloPlayerController : MonoBehaviour {
     {
         Application.targetFrameRate = 60;
         main = this;
+
         if (GameObject.FindGameObjectWithTag("GameController") == null)
         {
             Instantiate(GameControllerPrefab);
@@ -75,9 +68,8 @@ public class SoloPlayerController : MonoBehaviour {
         //create unity event
         if (resetEvent == null) resetEvent = new UnityEvent();
 
-		characterCtrlr = GetComponent<CharacterController> ();
         camObj = transform.GetChild(0);
-        camOffset = cam.transform.position - transform.position;
+        camOffset = camObj.transform.position - transform.position;
 
         gameCtrl = GameObject.FindGameObjectWithTag("GameController").GetComponent<SoloGameController>();
 
@@ -167,16 +159,11 @@ public class SoloPlayerController : MonoBehaviour {
         switch (gameCtrl.gameState)
         {
             case "start":
-                
                 break;
             case "live":
 
                 if (active == true)
                 {
-                    // Get Input
-                    h = Input.GetAxis("Horizontal");
-                    v = Input.GetAxis("Vertical");
-
                     // Record pos and rotation
                     recordArray[0, 0] = transform.position;
                     recordArray[0, 1] = transform.rotation;
@@ -190,34 +177,6 @@ public class SoloPlayerController : MonoBehaviour {
 
                     //Set Cam Dist
                     SetCameraOffset();
-
-
-                    // Check Gravity
-                    if (characterCtrlr.isGrounded == true)
-                    {
-                        moveDirection = new Vector3(h, 0, v);
-                        if (Input.GetButtonDown("Jump"))
-                        {
-                            moveDirection.y = jumpSpd;
-
-                        }
-                    }
-                    else
-                    {
-                        // Check if something is above the player, and if true reset up velocity.
-                        if (characterCtrlr.collisionFlags == CollisionFlags.Above)
-                        {
-                            moveDirection.y = 0f;
-                        }
-                        moveDirection.x = h;
-                        moveDirection.z = v;
-                        moveDirection.y -= gravity * Time.deltaTime;
-                    }
-
-                    moveDirection.x *= moveSpd;
-                    moveDirection.z *= moveSpd;
-                    moveDirection = transform.TransformDirection(moveDirection);
-                    characterCtrlr.Move(moveDirection * Time.deltaTime * gameCtrl.playbackSpeed);
 
                     //maxAmountOfSteps = rewindLimit * 60;
                     //shuffle recorded steps
@@ -402,11 +361,10 @@ public class SoloPlayerController : MonoBehaviour {
         }
     }
 	void SetCameraOffset()
-	{	cam.transform.position = transform.position + camOffset;
+	{	camObj.transform.position = transform.position + camOffset;
 	}
     void ResetArrays()
     {
-        ///// CHEWCK ME
         //initialise array values.
         for (int i = 0; i < maxAmountOfSteps; i++)
         {
