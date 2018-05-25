@@ -209,6 +209,38 @@ public class SoloPlayerController : MonoBehaviour {
             
 	}
 
+    float Fibonnaci(int n)
+    {
+        int f = 0;
+        float[] sequence = new float[n];
+
+        int v = 1;
+        int vv = 1;
+
+        sequence[0] = v;
+        sequence[1] = vv;
+
+        // generate fibonnaci sequence
+        for (int i = 2; i < n; i++)
+        {
+            sequence[i] = sequence[i - 1] + sequence[i - 2];
+
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+
+            v = 
+
+            f = v + vv;
+             
+            
+        }
+
+        return f;
+        
+    }
+
     void PlaybackCharacterActions()
     {
         state = "rewinding";
