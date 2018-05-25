@@ -6,14 +6,20 @@ public class StageTimer : MonoBehaviour
 {
     [SerializeField] float timer = 0f;
     [SerializeField] float finishTime;
+    [SerializeField] float baseTime;
+    [SerializeField] float score;
 
-    string state = "idle";
+    [SerializeField] string state = "idle";
 
     public FloatEvent TimerUpdate;
     public FloatEvent Finish;
+    public StringEvent ScoreUpdate;
+    public StringEvent BaseTimeUpdate;
+    public FloatEvent ScorePercentage;
 
-	// Update is called once per frame
-	void Update()
+
+    // Update is called once per frame
+    void Update()
 	{
 		switch (state)
         {   
@@ -22,6 +28,7 @@ public class StageTimer : MonoBehaviour
             case "start":
                 timer = 0f;
                 state = "live";
+                BaseTimeUpdate.Invoke(baseTime.ToString("F2"));
                 break;
             case "live":
                 timer += Time.deltaTime;
@@ -31,7 +38,10 @@ public class StageTimer : MonoBehaviour
                 // show finish time
                 finishTime = timer;
                 //timerTxtObj.UpdateText(finishTime.ToString("F3"));
+                score = baseTime - finishTime;
                 Finish.Invoke(finishTime);
+                ScoreUpdate.Invoke(score.ToString("F2"));
+                ScorePercentage.Invoke(finishTime / baseTime);
                 state = "end";
                 break;
             case "end":
