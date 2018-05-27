@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(BoxCollider))]
+
 public class Trigger : MonoBehaviour {
 
     [SerializeField] string[] tags = new string[1];
