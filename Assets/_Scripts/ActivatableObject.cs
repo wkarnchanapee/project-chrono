@@ -17,14 +17,4 @@ public abstract class ActivatableObject : MonoBehaviour
         startPosition = transform.position;
         startRotation = transform.rotation;
     }
-
-    private void LateUpdate()
-    {
-        if (SoloGameController.main.gameState == "reset")
-        {
-            transform.position = startPosition;
-            transform.rotation = startRotation;
-            
-        }
-    }
 }
