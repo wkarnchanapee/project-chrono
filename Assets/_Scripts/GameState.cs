@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu]
 public class GameState : ScriptableObject {
 
+    
     public string state = "";
+    public UnityEvent resetEvent;
+
     public void Awake()
     {
         state = "idle";
@@ -15,6 +19,7 @@ public class GameState : ScriptableObject {
     }
     public void ResetState()
     {
-        Debug.Log("Reset every state");
+        resetEvent.Invoke();
+        Debug.Log("Reset Triggered");
     }
 }
